@@ -1,4 +1,4 @@
-import { isValidString } from "./utils";
+import isValidString from "../validators/isValidString";
 
 /**
  * 지정된 패턴에 따라 입력 값에 하이픈을 자동으로 추가하는 함수
