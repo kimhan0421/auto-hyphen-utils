@@ -4,9 +4,16 @@
   "description": "This module provides automatic formatting and hyphenation for structured inputs with a similar pattern.",
   "keywords": [
     "hyphen",
-    "auto-format",
-    "input-formatting"
+    "format",
+    "helper"
   ],
+  "homepage": "https://github.com/kimhan0421/hyphen-helper",
+  "bugs": "https://github.com/kimhan0421/hyphen-helper/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimhan0421/hyphen-helper.git",
+    "directory": "packages"
+  },
   "license": "MIT",
   "author": {
     "name": "HanSol Kim",
