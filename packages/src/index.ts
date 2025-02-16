@@ -1,4 +1,4 @@
-import { commonAutoHyphen } from "./common";
+import { commonAutoHyphen } from './common';
 
 const autoHyphen = {
   common: commonAutoHyphen,
