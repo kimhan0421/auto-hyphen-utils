@@ -1,1 +1,1 @@
-export { default as commonAutoHyphen } from "./commonAutoHyphen";
+export { default as commonAutoHyphen } from './commonAutoHyphen';

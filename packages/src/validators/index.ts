@@ -1,1 +1,1 @@
-export { default as isValidString } from "./isValidString";
+export { default as isValidString } from './isValidString';
