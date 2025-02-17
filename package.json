@@ -7,6 +7,7 @@
   ],
   "type": "module",
   "scripts": {
+    "prepare": "husky",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write ."
@@ -24,6 +25,8 @@
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-unicorn": "^56.0.1",
     "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "prettier": "^3.5.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
