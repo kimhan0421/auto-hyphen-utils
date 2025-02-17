@@ -1,0 +1,42 @@
+name: NPM Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    name: Publish to NPM with Tag
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js with Yarn Berry
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Version & Tag
+        run: |
+          yarn changeset version
+          VERSION=$(node -p "require('./package.json').version")
+          git tag -a "v$VERSION" -m "Version v$VERSION"
+          git push origin "v$VERSION"
+
+      - name: Publish to NPM
+        run: yarn changeset publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

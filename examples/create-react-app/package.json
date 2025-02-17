@@ -1,7 +1,7 @@
 {
   "name": "@auto-hyphen-utils/create-react-app",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "predev": "yarn workspace auto-hyphen-utils build",
