@@ -1,13 +1,9 @@
 name: Changeset PR
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - opened
-      - synchronize
-      - reopened
 
 permissions:
   contents: write
