@@ -25,11 +25,6 @@ jobs:
           node-version: 20
           cache: 'yarn'
 
-      - name: Install Yarn Plugins
-        run: |
-          yarn plugin import interactive-tools
-          yarn plugin import packed
-
       - name: Install Dependencies
         run: yarn install --immutable --immutable-cache --check-cache
 
