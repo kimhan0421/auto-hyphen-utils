@@ -1,14 +1,11 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-require-imports */
+import eslint from '@eslint/js';
+import importPlugin from 'eslint-plugin-import';
+import prettierConfig from 'eslint-plugin-prettier/recommended';
+import unicorn from 'eslint-plugin-unicorn';
+import unusedImports from 'eslint-plugin-unused-imports';
+import tseslint from 'typescript-eslint';
 
-const eslint = require('@eslint/js');
-const importPlugin = require('eslint-plugin-import');
-const prettierConfig = require('eslint-plugin-prettier/recommended');
-const unicorn = require('eslint-plugin-unicorn');
-const unusedImports = require('eslint-plugin-unused-imports');
-const tseslint = require('typescript-eslint');
-
-module.exports = tseslint.config(
+export default tseslint.config(
   {
     ignores: ['**/dist/', '**/esm/', '**/.next/', '.yarn/'],
   },
