@@ -24,8 +24,28 @@ jobs:
           node-version: 20
           cache: 'yarn'
 
-      - name: Install Dependencies
-        run: yarn install --immutable
+      - name: Install Dependencies (Allow Lockfile Update)
+        run: yarn install
+
+      - name: Check for lockfile changes
+        id: check-lockfile
+        run: |
+          git add yarn.lock
+          if git diff --cached --quiet; then
+            echo "Lockfile is up to date."
+            echo "lockfile_changed=false" >> $GITHUB_ENV
+          else
+            echo "Lockfile has changed. Committing..."
+            echo "lockfile_changed=true" >> $GITHUB_ENV
+          fi
+
+      - name: Commit and Push Updated Lockfile
+        if: env.lockfile_changed == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: sync yarn.lock with package.json" -a
+          git push origin main
 
       - name: Create Changesets Pull Request
         uses: changesets/action@v1
