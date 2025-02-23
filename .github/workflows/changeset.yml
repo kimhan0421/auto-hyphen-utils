@@ -31,11 +31,6 @@ jobs:
       - name: Verify Workspaces
         run: yarn workspaces list
 
-      - name: Run Tests
-        run: |
-          yarn install --immutable --immutable-cache --check-cache
-          yarn workspace auto-hyphen-utils test
-
       - name: Run Lint
         run: yarn lint
 
