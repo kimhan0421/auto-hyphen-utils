@@ -28,14 +28,21 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable --immutable-cache --check-cache
 
-      - name: Verify Workspaces
-        run: yarn workspaces list
+      - name: Check Installed Modules
+        run: ls -la .yarn node_modules || true
+
+      - name: Run Tests
+        run: |
+          yarn workspaces focus auto-hyphen-utils
+          yarn workspace auto-hyphen-utils test
 
       - name: Run Lint
         run: yarn lint
 
       - name: Build Package
-        run: yarn build
+        run: |
+          yarn workspaces focus auto-hyphen-utils
+          yarn workspace auto-hyphen-utils build
 
   create-changeset-pr:
     name: Create Changeset PR
