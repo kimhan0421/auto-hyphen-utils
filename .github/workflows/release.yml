@@ -1,41 +1,42 @@
-name: Changeset PR
+name: NPM Release
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
-  pull_request:
-    types: [opened, synchronize, reopened]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+permissions:
+  contents: write
+  packages: write
 
 jobs:
-  ci:
-    name: Run Tests & Lint
+  release:
+    name: Publish to NPM with Tag
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout branch
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Set up Node.js with Yarn Berry
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'yarn'
 
       - name: Install Dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: yarn install --immutable
 
-      - name: Check Installed Modules
-        run: ls -la .yarn node_modules || true
+      - name: Version & Tag
+        run: |
+          yarn changeset version
+          VERSION=$(node -p "require('./package.json').version")
+          git tag -a "v$VERSION" -m "Version v$VERSION"
+          git push origin "v$VERSION"
 
-      - name: Run Tests
-        run: yarn workspace auto-hyphen-utils test
-
-      - name: Run Lint
-        run: yarn lint
-
-      - name: Build Package
-        run: yarn workspace auto-hyphen-utils build
+      - name: Publish to NPM
+        run: yarn changeset publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
