@@ -35,7 +35,7 @@ jobs:
         run: yarn lint
 
       - name: Build Package
-        run: yarn workspace auto-hyphen-utils build
+        run: yarn build
 
   create-changeset-pr:
     name: Create Changeset PR
