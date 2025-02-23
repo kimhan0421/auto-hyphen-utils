@@ -1,51 +1,58 @@
-name: Changeset PR
+name: Changeset PR & Publish
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 
-permissions:
-  contents: write
-  pull-requests: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  create-changeset-pr:
-    name: Create Changeset PR
+  ci:
+    name: Run Tests & Lint
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout branch
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js with Yarn Berry
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'yarn'
 
-      - name: Install Dependencies (Allow Lockfile Update)
-        run: yarn install
-
-      - name: Check for lockfile changes
-        id: check-lockfile
+      - name: Install Yarn Plugins
         run: |
-          git add yarn.lock
-          if git diff --cached --quiet; then
-            echo "Lockfile is up to date."
-            echo "lockfile_changed=false" >> $GITHUB_ENV
-          else
-            echo "Lockfile has changed. Committing..."
-            echo "lockfile_changed=true" >> $GITHUB_ENV
-          fi
+          yarn plugin import interactive-tools
+          yarn plugin import packed
 
-      - name: Commit and Push Updated Lockfile
-        if: env.lockfile_changed == 'true'
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: sync yarn.lock with package.json" -a
-          git push origin main
+      - name: Install Dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+
+      - name: Run Tests
+        run: yarn workspace auto-hyphen-utils test
+
+      - name: Run Lint
+        run: yarn lint
+
+      - name: Build Package
+        run: yarn workspace auto-hyphen-utils build
+
+  create-changeset-pr:
+    name: Create Changeset PR
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
 
       - name: Create Changesets Pull Request
         uses: changesets/action@v1
@@ -55,3 +62,24 @@ jobs:
           version: yarn changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-to-npm:
+    name: Publish Package
+    runs-on: ubuntu-latest
+    needs: create-changeset-pr
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+
+      - name: Publish to NPM
+        run: yarn changeset:publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Send Slack Notification
+        if: success()
+        run: echo "Successfully published to NPM"
