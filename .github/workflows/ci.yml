@@ -32,9 +32,19 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+
+      - name: Clear Yarn Cache
+        run: yarn cache clean
 
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --check-cache
+
+      - name: Verify Workspaces
+        run: yarn workspaces list
 
       - name: Build Package
-        run: yarn workspace auto-hyphen-utils build
+        run: yarn workspace auto-hyphen-utils run build
+
+      - name: Run command
+        run: ${{ matrix.command }}
