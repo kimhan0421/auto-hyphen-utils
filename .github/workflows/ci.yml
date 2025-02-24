@@ -30,9 +30,9 @@ jobs:
         run: |
           rm -rf node_modules .yarn/cache
           yarn cache clean
-
       - name: Configure Yarn
-        run: echo "nodeLinker: node-modules" >> .yarnrc.yml
+        run: |
+          echo 'nodeLinker: node-modules' > .yarnrc.yml
 
       - name: Install Dependencies
         run: yarn install --immutable
