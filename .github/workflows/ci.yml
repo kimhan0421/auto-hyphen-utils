@@ -44,7 +44,7 @@ jobs:
         run: yarn workspaces list
 
       - name: Build Package
-        run: yarn workspace auto-hyphen-utils run build
+        run: yarn build
 
       - name: Run command
         run: ${{ matrix.command }}
