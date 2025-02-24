@@ -30,7 +30,7 @@ jobs:
         run: yarn install
 
       - name: Run Tests
-        run: yarn test
+        run: yarn workspace auto-hyphen-utils test
 
       - name: Build Package
         run: yarn workspace auto-hyphen-utils build
