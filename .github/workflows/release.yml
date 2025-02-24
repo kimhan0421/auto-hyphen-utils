@@ -1,8 +1,7 @@
 name: NPM Release
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
 
@@ -11,9 +10,7 @@ permissions:
   packages: write
 
 jobs:
-  release:
-    name: Publish to NPM with Tag
-    if: github.event.pull_request.merged == true
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,20 +26,19 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
 
-      - name: Set Git User
-        run: |
-          git config --global user.email "kohasi0421@gmail.com"
-          git config --global user.name "kimhansol"
+      - name: Install Dependencies
+        run: yarn install
 
+      - name: Build Package
+        run: yarn workspace auto-hyphen-utils run build
 
-      - name: Version & Tag
-        run: |
-          yarn changeset version
-          VERSION=$(node -p "require('./package.json').version")
-          git tag -a "v$VERSION" -m "Version v$VERSION"
-          git push origin "v$VERSION"
-
-      - name: Publish to NPM
-        run: yarn changeset publish
+      - name: Create Changesets Pull Request or Publish to NPM
+        uses: changesets/action@v1
+        with:
+          title: 'chore: version packages'
+          commit: 'chore: version packages'
+          version: yarn changeset:version
+          publish: yarn changeset:publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
