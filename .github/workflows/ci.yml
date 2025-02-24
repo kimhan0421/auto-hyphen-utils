@@ -26,8 +26,16 @@ jobs:
           node-version: 20
           cache: 'yarn'
 
+      - name: Remove node_modules and Yarn cache
+        run: |
+          rm -rf node_modules
+          yarn cache clean
+
       - name: Install Dependencies
         run: yarn install
+
+      - name: Debug Installed Workspaces
+        run: yarn workspaces list --json
 
       - name: Run Tests
         run: yarn workspace auto-hyphen-utils test
