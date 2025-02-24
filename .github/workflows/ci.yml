@@ -35,11 +35,5 @@ jobs:
       - name: Build auto-hyphen-utils
         run: yarn workspace auto-hyphen-utils run build
 
-      - name: Run Tests with Coverage
-        run: yarn workspace auto-hyphen-utils run test --coverage
-
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: packages/auto-hyphen-utils/coverage
+      - name: Run Tests
+        run: yarn workspace auto-hyphen-utils run test
