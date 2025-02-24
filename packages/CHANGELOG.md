@@ -1,5 +1,11 @@
 # auto-hyphen-utils
 
+## 0.1.0
+
+### Minor Changes
+
+- 5e206b9: add phoneNumber utility and test cases
+
 ## 0.0.3
 
 ### Patch Changes
