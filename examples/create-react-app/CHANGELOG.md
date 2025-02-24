@@ -1,5 +1,13 @@
 # @auto-hyphen-utils/create-react-app
 
+## 0.0.3
+
+### Patch Changes
+
+- 5e206b9: add phoneNumber utility and test cases
+- Updated dependencies [5e206b9]
+  - auto-hyphen-utils@0.1.0
+
 ## 0.0.2
 
 ### Patch Changes
