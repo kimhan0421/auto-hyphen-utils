@@ -13,10 +13,19 @@ concurrency:
 jobs:
   ci:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        command:
+          [
+            'yarn workspace auto-hyphen-utils run test',
+            'yarn lint',
+          ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
