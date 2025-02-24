@@ -1,6 +1,6 @@
-import type { Config } from 'jest';
+import { type JestConfigWithTsJest } from 'ts-jest';
 
-const config: Config = {
+const config: JestConfigWithTsJest = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts'],
@@ -15,6 +15,9 @@ const config: Config = {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  coverageReporters: ['json', 'lcov', 'text', 'clover'],
 };
 
 export default config;
