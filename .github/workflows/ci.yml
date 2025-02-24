@@ -27,10 +27,12 @@ jobs:
           cache: 'yarn'
 
       - name: Clear Yarn Cache
-        run: yarn cache clean
+        run: |
+          yarn cache clean
+          yarn workspaces list --json
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install
 
       - name: Build Package
         run: yarn workspace auto-hyphen-utils run build
