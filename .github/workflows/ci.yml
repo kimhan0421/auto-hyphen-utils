@@ -28,17 +28,23 @@ jobs:
 
       - name: Remove node_modules and Yarn cache
         run: |
-          rm -rf node_modules
+          rm -rf node_modules .yarn/cache
           yarn cache clean
 
-      - name: Install Dependencies
-        run: yarn install
+      - name: Configure Yarn
+        run: echo "nodeLinker: node-modules" >> .yarnrc.yml
 
-      - name: Debug Installed Workspaces
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Check Installed Workspaces
         run: yarn workspaces list --json
 
+      - name: Check node_modules in auto-hyphen-utils
+        run: ls -la packages/auto-hyphen-utils/node_modules || echo "node_modules not found"
+
       - name: Run Tests
-        run: yarn workspace auto-hyphen-utils test
+        run: yarn workspaces foreach --verbose --topological-dev run test
 
       - name: Build Package
         run: yarn workspace auto-hyphen-utils build
