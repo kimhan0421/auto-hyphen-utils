@@ -8,7 +8,8 @@
     "dev": "yarn predev && vite",
     "build": "tsc && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest"
   },
   "dependencies": {
     "auto-hyphen-utils": "workspace:*",
