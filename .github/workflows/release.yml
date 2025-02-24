@@ -29,6 +29,12 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
 
+      - name: Set Git User
+        run: |
+          git config --global user.email "kohasi0421@gmail.com"
+          git config --global user.name "kimhansol"
+
+
       - name: Version & Tag
         run: |
           yarn changeset version
