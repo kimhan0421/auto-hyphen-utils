@@ -34,5 +34,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build Package
+      - name: Debug workspaces
+        run: yarn workspaces list --json
+
+      - name: Build auto-hyphen-utils
         run: yarn workspace auto-hyphen-utils run build
