@@ -2200,7 +2200,7 @@ __metadata:
   dependencies:
     "@types/jest": "npm:^29.5.14"
     jest: "npm:^29.0.0"
-    ts-jest: "npm:^29.2.5"
+    ts-jest: "npm:^29.2.6"
     tsup: "npm:^8.1.0"
     typescript: "npm:^5.7.3"
   languageName: unknown
@@ -7286,7 +7286,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:^29.2.5":
+"ts-jest@npm:^29.2.5, ts-jest@npm:^29.2.6":
   version: 29.2.6
   resolution: "ts-jest@npm:29.2.6"
   dependencies:
