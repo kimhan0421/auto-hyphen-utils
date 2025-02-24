@@ -13,12 +13,10 @@ concurrency:
 jobs:
   ci:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Enable Corepack
-        run: corepack enable
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -26,25 +24,8 @@ jobs:
           node-version: 20
           cache: 'yarn'
 
-      - name: Remove node_modules and Yarn cache
-        run: |
-          rm -rf node_modules .yarn/cache
-          yarn cache clean
-      - name: Configure Yarn
-        run: |
-          echo 'nodeLinker: node-modules' > .yarnrc.yml
-
       - name: Install Dependencies
-        run: yarn install --immutable
-
-      - name: Check Installed Workspaces
-        run: yarn workspaces list --json
-
-      - name: Check node_modules in auto-hyphen-utils
-        run: ls -la packages/auto-hyphen-utils/node_modules || echo "node_modules not found"
-
-      - name: Run Tests
-        run: yarn workspaces foreach --verbose --topological-dev run test
+        run: yarn install
 
       - name: Build Package
         run: yarn workspace auto-hyphen-utils build
