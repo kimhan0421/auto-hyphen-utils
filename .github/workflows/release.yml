@@ -40,7 +40,7 @@ jobs:
           git commit -m "chore: version packages" || echo "No changes to commit"
 
       - name: Publish to NPM
-        run: yarn changeset publish
+        run: npm publish --registry=https://registry.npmjs.org/ --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
