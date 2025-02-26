@@ -22,10 +22,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          registry-url: "https://registry.npmjs.org"
           cache: 'yarn'
-
-      - name: Setup .npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
       - name: Install Dependencies
         run: yarn install --immutable
@@ -37,12 +35,14 @@ jobs:
         run: |
           yarn changeset version
           git add .
-          git commit -m "chore: version packages" || echo "No changes to commit"
+          git diff --staged --quiet || git commit -m "chore: version packages"
 
       - name: Publish to NPM
-        run: npm publish --registry=https://registry.npmjs.org/ --access public
+        run: yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tag new version
         if: github.ref == 'refs/heads/main'
@@ -51,5 +51,9 @@ jobs:
           VERSION=$(node -p "require('./packages/auto-hyphen-utils/package.json').version")
           TAG_NAME="${PACKAGE_NAME}@${VERSION}"
 
-          git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
-          git push origin "$TAG_NAME"
+          if git tag -l | grep -q "$TAG_NAME"; then
+            echo "Tag $TAG_NAME already exists. Skipping..."
+          else
+            git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
+            git push origin "$TAG_NAME"
+          fi
