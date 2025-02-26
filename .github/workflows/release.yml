@@ -28,6 +28,13 @@ jobs:
       - name: Install Dependencies
         run: yarn install --immutable
 
+      - name: Create and configure .npmrc
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+          echo "always-auth=true" >> ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Build Package
         run: yarn workspace auto-hyphen-utils run build
 
@@ -38,7 +45,7 @@ jobs:
           git diff --staged --quiet || git commit -m "chore: version packages"
 
       - name: Publish to NPM
-        run: yarn npm publish
+        run: yarn changeset:publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
