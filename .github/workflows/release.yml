@@ -50,17 +50,3 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Tag new version
-        if: github.ref == 'refs/heads/main'
-        run: |
-          PACKAGE_NAME="auto-hyphen-utils"
-          VERSION=$(node -p "require('./packages/auto-hyphen-utils/package.json').version")
-          TAG_NAME="${PACKAGE_NAME}@${VERSION}"
-
-          if git tag -l | grep -q "$TAG_NAME"; then
-            echo "Tag $TAG_NAME already exists. Skipping..."
-          else
-            git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
-            git push origin "$TAG_NAME"
-          fi
