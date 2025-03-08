@@ -1,5 +1,11 @@
 # auto-hyphen-utils
 
+## 1.0.0
+
+### Major Changes
+
+- release:v1.0.0
+
 ## 0.1.0
 
 ### Minor Changes
