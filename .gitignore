@@ -9,3 +9,5 @@ coverage
 .pnp.*
 !.yarn/releases
 !.yarn/sdks
+
+.env
