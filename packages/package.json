@@ -5,7 +5,12 @@
   "keywords": [
     "hyphen",
     "format",
-    "helper"
+    "helper",
+    "auto-hyphen",
+    "input-format",
+    "auto-format",
+    "text-format",
+    "hyphenation"
   ],
   "homepage": "https://github.com/kimhan0421/hyphen-helper",
   "bugs": "https://github.com/kimhan0421/hyphen-helper/issues",
