@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/npm/l/auto-hyphen-utils)](https://github.com/kimhan0421/auto-hyphen-utils/blob/main/LICENSE)
 [![Build Status](https://github.com/kimhan0421/auto-hyphen-utils/actions/workflows/release.yml/badge.svg)](https://github.com/kimhan0421/auto-hyphen-utils/actions)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/auto-hyphen-utils)](https://bundlephobia.com/package/auto-hyphen-utils)
-<!-- ![Downloads](https://img.shields.io/npm/dm/auto-hyphen-utils?color=green) -->
+![Downloads](https://img.shields.io/npm/dm/auto-hyphen-utils?color=green)
 
 > ✨ **입력값을 자동으로 하이픈 처리하는 JavaScript 유틸리티 라이브러리** <br/>
 > 전화번호, 주민등록번호, 사업자등록번호 등 다양한 입력값을 자동으로 변환할 수 있습니다.
