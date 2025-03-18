@@ -1,5 +1,12 @@
 # @auto-hyphen-utils/create-react-app
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - auto-hyphen-utils@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

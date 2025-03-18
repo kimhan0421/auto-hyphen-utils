@@ -1,5 +1,11 @@
 # auto-hyphen-utils
 
+## 1.0.2
+
+### Patch Changes
+
+- update Readme.md
+
 ## 1.0.1
 
 ### Patch Changes
