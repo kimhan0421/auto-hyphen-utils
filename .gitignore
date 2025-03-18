@@ -11,3 +11,5 @@ coverage
 !.yarn/sdks
 
 .env
+.secrets
+.actrc
