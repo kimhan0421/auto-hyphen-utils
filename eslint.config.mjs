@@ -1,9 +1,9 @@
 import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
 import prettierConfig from 'eslint-plugin-prettier/recommended';
 import unicorn from 'eslint-plugin-unicorn';
 import unusedImports from 'eslint-plugin-unused-imports';
-import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
